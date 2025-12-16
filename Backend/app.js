@@ -2,6 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import bookingRoutes from './src/routes/bookings.js';
+import './src/models/adminModel.js';
 import availabilityRoutes from './src/routes/availability.js';
 import customerRoutes from './src/routes/customers.js';
 import { webhookRouter, paymentRouter } from "./src/routes/payment.js";

@@ -1,6 +1,7 @@
 import cron from 'node-cron';
 import pool from '../config/db.js';
 
+console.log ("Cron on");
 async function removeAllUnpaidBookings() {
     const connection = await pool.getConnection();
     try {
