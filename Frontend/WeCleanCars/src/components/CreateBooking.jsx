@@ -1,12 +1,22 @@
 import axios from "axios";
+import { useState } from "react";
+
 
 export default function Step3ConfirmBooking({ bookingData, setStep, setPaymentData, setBookingData }) {
+  const [toast, setToast] = useState({ message: "", type: "" }); // type: "success" || "error"
+
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+    setTimeout(() => {
+      setToast({ message: "", type: "" });
+    }, 3000);
+  }
   const handleNext = async () => {
     try {
       
       const res = await axios.post("http://localhost:3000/api/bookings/create", bookingData);
 
-      alert("Booking created successfully!");
+      showToast("Booking created successfully!", "success");
       console.log(res.data);
 
       const bookings = res.data.bookings;
@@ -21,7 +31,7 @@ export default function Step3ConfirmBooking({ bookingData, setStep, setPaymentDa
       setStep(4);
     } catch (err) {
       console.error(err);
-      alert("Error creating booking");
+      showToast("Error creating booking", "error");
     }
   };
 
@@ -30,7 +40,7 @@ export default function Step3ConfirmBooking({ bookingData, setStep, setPaymentDa
       <h2>Confirm Booking</h2>
       <p>Address: {bookingData.address}</p>
       <p>Date: {bookingData.date}</p>
-      <p>Slots: {bookingData.chosenSlots}</p>
+      <p>Time: {bookingData.slotTimes.map(t => t).join(" / ") }</p>
       <button onClick={handleNext}>Confirm Booking</button>
       <button onClick={() => {
                 setBookingData(prev => {
@@ -58,6 +68,8 @@ export default function Step3ConfirmBooking({ bookingData, setStep, setPaymentDa
                 >
                 Back
                 </button>
+    {/* Toast message  */}
+    {toast.message && (<div className={`toast ${toast.type}`}>{toast.message}</div>)}
     </div>
   );
 }

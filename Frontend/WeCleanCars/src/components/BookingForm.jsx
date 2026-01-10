@@ -107,64 +107,77 @@ export default function Step1BookingForm({ bookingData, setBookingData, setStep 
 
         setStep(2);
         } catch (err) {
-        console.error(err);
+            if (err.response) {
+                console.error("status:", err.response.status);
+                console.error("Response data:", err.response.data);
+            } else {
+                console.error(err);
+            }
         alert("Error fetching options");
         }
     };
     //! add error for no cleaners
 
     return (
-        <form onSubmit={handleSubmit}>
-        <p>Address:</p>
-        <input
-            name="bookingAddress"
-            value={form.bookingAddress}
-            onChange={handleChange}
-            required
-            />
-
-        <p>Date:</p>
-        <input
-            type="date"
-            name="date"
-            value={form.date}
-            onChange={handleChange}
-            required
-        />
-
-        {form.vehicles.map((vehicle, index) => (
-            <div key={index}>
-                <p>Service Type:</p>
-                <select
-                value={vehicle.serviceId}
-                onChange={(e) => updateVehicle(index, "serviceId", e.target.value)}
-                >
-                {serviceTypes.map((s) => (
-                    <option key={s.id} value={s.id}>{s.name}</option>
-                ))}
-                </select>
-
-                <p>Vehicle Type:</p>
-                <select
-                value={vehicle.vehicleTypeId}
-                onChange={(e) => updateVehicle(index, "vehicleTypeId", e.target.value)}
-                >
-                {vehicleTypes.map((v) => (
-                    <option key={v.id} value={v.id}>{v.name}</option>
-                ))}
-                </select>
-
-                {form.vehicles.length > 1 && (
-                <button type="button" onClick={() => removeVehicle(index)}>
-                    Remove Vehicle
-                </button>
-                )}
+        <form id="bookingForm" onSubmit={handleSubmit}>
+            <div className="formRow">
+                <label htmlFor="address">Address:</label>
+                <input id="address"
+                    name="bookingAddress"
+                    value={form.bookingAddress}
+                    onChange={handleChange}
+                    required
+                />
             </div>
-            ))}
+            <div className="formRow">
+                <label htmlFor="date">Date:</label>
+                <input id="date"
+                    type="date"
+                    name="date"
+                    value={form.date}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            
 
-            <button type="button" onClick={addVehicle}>Add another vehicle</button>
+            {form.vehicles.map((vehicle, index) => (
+                <div key={index}>
+                    <div className="formRow">
+                        <label htmlFor={`serviceType-${index}`}>Service Type:</label>
+                        <select id={`serviceType-${index}`}
+                        value={vehicle.serviceId}
+                        onChange={(e) => updateVehicle(index, "serviceId", e.target.value)}
+                        >
+                        {serviceTypes.map((s) => (
+                            <option key={s.id} value={s.id}>{s.name}</option>
+                        ))}
+                        </select>
+                    </div>
+                    <div className="formRow">
+                        <label htmlFor={`vehicleType-${index}`}>Vehicle Type:</label>
+                        <select id={`vehicleType-${index}`}
+                        value={vehicle.vehicleTypeId}
+                        onChange={(e) => updateVehicle(index, "vehicleTypeId", e.target.value)}
+                        >
+                        {vehicleTypes.map((v) => (
+                            <option key={v.id} value={v.id}>{v.name}</option>
+                        ))}
+                        </select>
+                    </div>
 
-        <button type="submit" disabled={isFetching}>Find Options</button>
+                    {form.vehicles.length > 1 && (
+                    <button id="removeVehicle" type="button" onClick={() => removeVehicle(index)}>
+                        Remove Vehicle
+                    </button>
+                    )}
+                </div>
+                ))}
+            <div className="bottomButtons">
+                <button type="button" onClick={addVehicle}>Add another vehicle</button>
+
+                <button type="submit" disabled={isFetching}>Find Options</button>
+            </div>
         </form>
     );
 }

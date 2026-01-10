@@ -1,5 +1,5 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Manrope', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -11,6 +11,22 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --primary-color: #ffffffc1;
+  --secondary-color: #46CFAA;
+  --tertiary-color: #1F2A2E;
+}
+
+:root.dark{
+  --primary-color: #1F2A2E;
+  --secondary-color: #46CFAA;
+  --tertiary-color: #ffffff;
+  color: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 a {
@@ -22,13 +38,61 @@ a:hover {
   color: #535bf2;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url('./assets/WCCcar.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
 body {
   margin: 0;
+  padding: 2%;
+  width: 100dvw;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  /* background-color: var(--secondary-color); */
+}
+
+header {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #535bf2;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 3rem;
+}
+
+#themeButton {
+  /* position: absolute;
+  top: 2%;
+  right: 2%; */
+  align-self: flex-start;
+}
+
+#progressBar {
+  /* position: absolute;
+  top: 2%;
+  left: 2%; */
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  gap: 1rem;
+}
+
+#progressBar .active {
+  color: var(--secondary-color);
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 4rem;
+  padding: 1rem;
+  min-height: unset;
+  align-items: start;
 }
 
 h1 {
@@ -40,20 +104,161 @@ button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
+  margin: 0.25em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--secondary-color);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--tertiary-color);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+#allForms {
+  /* position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%); */
+  background-color: var(--primary-color);
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  margin: 0;
+  padding: 4rem;
+  width: 100%;
+  height: auto;
+  /* max-height: 80dvh; */
+  border-radius: 4rem;
+  border: 3px solid var(--secondary-color);
+  /* overflow-y: scroll; */
+}
+
+.formRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 100%;
+  gap: 1rem;
+  max-width: 500px;
+}
+
+.formRow label {
+  width: 120px;
+  text-align: left;
+  margin-right: 1rem;
+}
+
+.formRow input,
+.formRow select,
+.formRow .stripeInput {
+  flex: 1;
+  margin: 0;
+}
+
+
+aside {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 4rem;
+  width: 100%;
+  height: auto;
+  border-radius: 4rem;
+  color: white;
+  /* border: 3px solid var(--secondary-color); */
+}
+
+input, select, .stripeInput{
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  margin: 0.25em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--secondary-color);
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+#title {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+#bookingForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  margin: 0;
+  width: 100%;
+}
+
+.bottomButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  padding-top: 5%;
+}
+
+#removeVehicle {
+  margin-left: 5px;
+  padding: 1%;
+  font-size: 0.8em;
+  font-weight: 300;
+  background-color: red;
+  
+}
+
+.toast {
+  position: fixed;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  animation: fadeInOut 3s forwards;
+}
+
+.toast.success {
+  background-color: var(--secondary-color);
+  color: var(--tertiary-color);
+}
+
+.toast.error {
+  background-color: #ffcccc;
+  color: red;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  10%, 90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {

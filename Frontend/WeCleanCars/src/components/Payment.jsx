@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { Elements, CardNumberElement, CardExpiryElement, CardCvcElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -32,7 +32,7 @@ function PaymentForm({ bookingIds, amount }) {
 
             const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
-                card: elements.getElement(CardElement),
+                card: elements.getElement(CardNumberElement),
                 },
             });
 
@@ -50,16 +50,27 @@ function PaymentForm({ bookingIds, amount }) {
     };
 
     return (
-        <form onSubmit={handlePayment} className="p-4 border rounded max-w-sm mx-auto space-y-4">
-        <CardElement options={{ hidePostalCode: true }} />
-        <button
-            type="submit"
-            disabled={!stripe || loading}
-            className="w-full bg-blue-600 text-white py-2 rounded"
-        >
-            {loading ? "Processing..." : `Pay £${amount}`}
-        </button>
-        {message && <p className="text-center mt-2">{message}</p>}
+        <form id="paymentForm" onSubmit={handlePayment}>
+            <h3>Payment Details</h3>
+            <div className="formRow">
+            <label htmlFor="cardNumber">Card Number</label>
+            <CardNumberElement className="stripeInput" />
+            </div>
+            <div className="formRow">
+            <label htmlFor="expiryDate">Expiry Date</label>
+            <CardExpiryElement className="stripeInput" />
+            </div>
+            <div className="formRow">
+            <label htmlFor="cvc">CVC</label>
+            <CardCvcElement className="stripeInput" />
+            </div>
+            <button
+                type="submit"
+                disabled={!stripe || loading}
+            >
+                {loading ? "Processing..." : `Pay £${amount}`}
+            </button>
+            {message && <p>{message}</p>}
         </form>
     );
 }
