@@ -1,14 +1,15 @@
 import './index.css'
 // import { useEffect } from "react";
 import { useState} from "react";
+import Step0CustomerCreation from "./components/CustomerCreation.jsx";
 import Step1BookingForm from "./components/BookingForm.jsx";
 import Step2CleanerOptions from "./components/CleanerOptions.jsx";
 import Step3CreateBooking from "./components/CreateBooking.jsx";
 import Step4Payment from "./components/Payment.jsx";
-import { bookingStepInfo } from './config/extraInfo.js';
+// import { bookingStepInfo } from './config/extraInfo.js';
 
 function App() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   // const [theme, setTheme] = useState("light");
   const [bookingData, setBookingData] = useState({
     customer_id: 7, // hardcoded for now
@@ -27,11 +28,14 @@ function App() {
   return (
     <>  
       <header>
+        <img src = "src/assets/WCCHero.avif" alt = "WeCleanCars Hero" id = "heroImage" />
         <ul id = "progressBar">
+          <li className={step === 0 ? "active" : ""}>Create account</li>
           <li className={step === 1 ? "active" : ""}>Your details</li>
           <li className={step === 2 ? "active" : ""}>Pick a Cleaner</li>
           <li className={step === 3 ? "active" : ""}>Confirmation</li>
           <li className={step === 4 ? "active" : ""}>Payment</li>
+          <li><a href = "https://wecleancars.uk" target='_self'>Home</a></li>
         </ul>
         {/* <button id = "themeButton" onClick={toggleTheme}>
           {theme === "light" ? "Dark" : "Light"} Mode
@@ -40,6 +44,10 @@ function App() {
       <div className="main">
         <div id = "allForms">
           {/* <h1 id = "title">Booking Flow Test</h1> */}
+
+          {step === 0 && (
+            <Step0CustomerCreation bookingData={bookingData} setBookingData={setBookingData} setStep={setStep} />
+          )}
 
           {step === 1 && (
             <Step1BookingForm bookingData={bookingData} setBookingData={setBookingData} setStep={setStep} />
@@ -62,10 +70,10 @@ function App() {
             />
           )} 
         </div>
-          <aside>
+          {/* <aside>
             <h2>{bookingStepInfo[step].title}</h2>
             <p>{bookingStepInfo[step].description}</p>
-          </aside>
+          </aside> */}
       </div>
     </>
   );

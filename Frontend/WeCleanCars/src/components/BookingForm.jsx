@@ -17,7 +17,7 @@ export default function Step1BookingForm({ bookingData, setBookingData, setStep 
     ];
 
     const [form, setForm] = useState({
-        bookingAddress: bookingData.bookingAddress,
+        // bookingAddress: bookingData.bookingAddress,
         date: bookingData.date,
         maxDistanceMiles: 10,
         vehicles: bookingData.vehicles || [{serviceId: 1, vehicleTypeId: 1}]
@@ -47,7 +47,7 @@ export default function Step1BookingForm({ bookingData, setBookingData, setStep 
     };
 
     const payload = {
-        bookingAddress: form.bookingAddress,
+        bookingAddress: bookingData.address,
         date: form.date,
         maxDistanceMiles: form.maxDistanceMiles,
         vehicles : form.vehicles.map(v => ({
@@ -120,7 +120,7 @@ export default function Step1BookingForm({ bookingData, setBookingData, setStep 
 
     return (
         <form id="bookingForm" onSubmit={handleSubmit}>
-            <div className="formRow">
+            {/* <div className="formRow">
                 <label htmlFor="address">Address:</label>
                 <input id="address"
                     name="bookingAddress"
@@ -128,7 +128,7 @@ export default function Step1BookingForm({ bookingData, setBookingData, setStep 
                     onChange={handleChange}
                     required
                 />
-            </div>
+            </div> */}
             <div className="formRow">
                 <label htmlFor="date">Date:</label>
                 <input id="date"
@@ -174,9 +174,9 @@ export default function Step1BookingForm({ bookingData, setBookingData, setStep 
                 </div>
                 ))}
             <div className="bottomButtons">
+                <button type="button" onClick={() => setStep(0)}>Back</button>
                 <button type="button" onClick={addVehicle}>Add another vehicle</button>
-
-                <button type="submit" disabled={isFetching}>Find Options</button>
+                <button type="submit" disabled={isFetching}>Continue</button>
             </div>
         </form>
     );
