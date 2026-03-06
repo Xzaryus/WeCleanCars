@@ -3,13 +3,24 @@ import pool from '../config/db.js';
 async function getCleanerLocation(cleanerId, date) {
     try {
         // Get the most recent booking (on or before the given date)
+        // const [rows] = await pool.query(`
+        //     SELECT latitude, longitude, date, start_slot
+        //     FROM bookings
+        //     WHERE assigned_cleaner_id = ?
+        //     AND date = ?
+        //     ORDER BY date DESC, FIELD(start_slot,
+        //         '08:30-10:00','10:30-12:00','12:30-14:00','14:30-16:00','16:30-18:00','18:30-20:00'
+        //     ) DESC
+        //     LIMIT 1;
+        // `, [cleanerId, date]);
+
         const [rows] = await pool.query(`
             SELECT latitude, longitude, date, start_slot
             FROM bookings
             WHERE assigned_cleaner_id = ?
             AND date = ?
             ORDER BY date DESC, FIELD(start_slot,
-                '08:30-10:00','10:30-12:00','12:30-14:00','14:30-16:00','16:30-18:00','18:30-20:00'
+                '08:30-09:30','09:30-10:30','10:30-11:30','11:30-12:30','12:30-13:30','13:30-14:30','14:30-15:30','15:30-16:30','16:30-17:30','17:30-18:30','18:30-19:30','19:30-20:30'
             ) DESC
             LIMIT 1;
         `, [cleanerId, date]);
