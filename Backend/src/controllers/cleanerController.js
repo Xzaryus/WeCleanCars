@@ -9,7 +9,7 @@ import {
 // Create a new cleaner
 async function addCleaner(req, res) {
     const cleanerData = req.body;
-    if (!cleanerData.full_name || !cleanerData.phone || !cleanerData.home_postcode || !cleanerData.tier) {
+    if (!cleanerData.full_name || !cleanerData.phone || !cleanerData.home_postcode || !cleanerData.tier_id) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
     try {
