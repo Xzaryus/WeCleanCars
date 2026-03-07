@@ -64,7 +64,7 @@ export default function Step2SelectOption({ bookingData, setBookingData, setStep
         const updatedBookingData = {
             ...bookingData,
             selectedCleanerId: selectedBlock.cleaner.id,
-            chosenSlots: [selectedBlock.slotBlock.map(s => s.id)],
+            chosenSlots: selectedBlock.slotBlock.map(s => s.id),
             slotTimes: selectedBlock.slotBlock.map(s => s.slot),
             cleanerDistance: selectedBlock.cleaner.distance
         };
@@ -74,7 +74,7 @@ export default function Step2SelectOption({ bookingData, setBookingData, setStep
         const payload = {
             customer_id: updatedBookingData.customer_id,
             selectedCleanerId: updatedBookingData.selectedCleanerId,
-            chosenSlots: updatedBookingData.chosenSlots.flat().map(slot => [slot]),
+            chosenSlots: updatedBookingData.chosenSlots,
             slotTimes: [updatedBookingData.slotTimes].flat().map(slot => [slot]),
             date: updatedBookingData.date,
             address: updatedBookingData.bookingAddress,

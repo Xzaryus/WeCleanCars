@@ -88,8 +88,8 @@ async function createBookingForCustomer(bookingRequest) {
         throw new Error("No slots selected");
     }
 
-    if (!Array.isArray(chosenSlots) || chosenSlots.length !== services.length) {
-        throw new Error("Chosen slots must be an array and match number of service types");
+    if (!Array.isArray(chosenSlots)) {
+        throw new Error("Chosen slots must be an array");
     }
 
     if (!Array.isArray(services)) {
@@ -103,24 +103,24 @@ async function createBookingForCustomer(bookingRequest) {
         const priceResult = await calculateBookingPrice(services, cleanerDistance);
 
         const bookingResults = [];
+        let slotCursor = 0;
 
         for (let i = 0; i < services.length; i++) {
+            
             const serviceObj = services[i];
-            const slotIds = chosenSlots[i];
-            const slotTimeBlock = slotTimes[i];
-            const slotTime = slotTimeBlock[0];
-
             const requiredSlots = await getRequiredSlots(serviceObj.serviceId, serviceObj.vehicleTypeId);
+            
             if (!requiredSlots) {
                 throw new Error(`Required slots not found for service ${serviceObj.serviceId} and vehicle type ${serviceObj.vehicleTypeId}`);
             }
+            const slotIds = chosenSlots.slice(slotCursor, slotCursor + requiredSlots);
+            const slotTimeBlock = slotTimes[i];
+            const slotTime = slotTimeBlock[0];
 
-            if (slotIds.length < requiredSlots) {
-                throw new Error(`Not enough slots available for service ${serviceObj.serviceId} and vehicle type ${serviceObj.vehicleTypeId}`);
-            }
+            slotCursor += requiredSlots;
 
-            if (slotIds.length > requiredSlots) {
-                throw new Error(`Too many slots selected for service ${serviceObj.serviceId} and vehicle type ${serviceObj.vehicleTypeId}`);
+            if (slotIds.length !== requiredSlots) {
+                throw new Error(`Not enough slots selected for service ${serviceObj.serviceId} and vehicle type ${serviceObj.vehicleTypeId}`);
             }
 
             // Only apply travel fee on the first booking

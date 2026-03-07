@@ -5,9 +5,11 @@ import axios from "axios";
 export default function Step1BookingForm({ bookingData, setBookingData, setStep }) {
 
     const serviceTypes = [
-        { id: 1, name: "£30 Detail" },
+        { id: 1, name: "£35 Deep Clean" },
         { id: 2, name: "Full Steam Ahead" },
-        { id: 3, name: "Whole Package" },
+        { id: 3, name: "The Exterior Detail" },
+        { id: 4, name: "The Essntial Valet" },
+        { id: 5, name: "The Premium Valet" },
     ];
 
     const vehicleTypes = [
