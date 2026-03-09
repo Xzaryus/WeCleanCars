@@ -3,11 +3,15 @@ import { createBrowserRouter } from "react-router-dom";
 import BookingLayout from "./layouts/BookingLayout";
 import AdminLayout from "./layouts/AdminLayout";
 
-import Step0CustomerCreation from "./components/CustomerCreation.jsx";
-import Step1BookingForm from "./components/BookingForm.jsx";
-import Step2CleanerOptions from "./components/CleanerOptions.jsx";
-import Step3CreateBooking from "./components/CreateBooking.jsx";
-import Step4Payment from "./components/Payment.jsx";
+import AdminLogin from "./pages/admin/AdminLogin";
+import ManagerDashboard from "./pages/admin/ManagerDashboard";
+import CleanerDashboard from "./pages/admin/CleanerDashboard";
+
+import Step0CustomerCreation from "./pages/booking/NewCustomerCreation.jsx";
+import Step1BookingForm from "./pages/booking/NewBookingForm.jsx";
+import Step2CleanerOptions from "./pages/booking/NewCleanerOptions.jsx";
+import Step3CreateBooking from "./pages/booking/NewCreateBooking.jsx";
+import Step4Payment from "./pages/booking/NewPayment.jsx";
 
 export const router = createBrowserRouter([
     {

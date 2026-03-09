@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
+// import "./bookings.css";
 
 export default function BookingLayout() {
     const [bookingData, setBookingData] = useState({});
@@ -7,13 +8,17 @@ export default function BookingLayout() {
     
     return (
         //!  Header and progress bar 
-        <Outlet 
-            context={[ 
-                bookingData,
-                setBookingData,
-                paymentData,
-                setPaymentData
-            ]}
-        />
-    );
+        <div className = "main">
+            <div className="allForms">
+                <Outlet 
+                    context={[ 
+                        bookingData,
+                        setBookingData,
+                        paymentData,
+                        setPaymentData
+                    ]}
+                />
+            </div>
+        </div>
+        );
 }
