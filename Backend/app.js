@@ -6,6 +6,7 @@ import './src/models/adminModel.js';
 import availabilityRoutes from './src/routes/availability.js';
 import customerRoutes from './src/routes/customers.js';
 import cleanerRoutes from './src/routes/cleaners.js';
+import adminRoutes from './src/routes/admin.js';
 import { webhookRouter, paymentRouter } from "./src/routes/payment.js";
 import rateLimit from 'express-rate-limit';
 // import other routes if needed
@@ -41,6 +42,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api', availabilityRoutes);
 app.use('/api', customerRoutes);
 app.use('/api', cleanerRoutes);
+app.use('/api', adminRoutes);
 
 
 // Optional: health check
