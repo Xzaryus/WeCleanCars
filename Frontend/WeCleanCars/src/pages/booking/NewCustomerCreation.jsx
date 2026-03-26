@@ -13,34 +13,51 @@ export default function Step0CustomerCreation() {
         address: bookingData.address || ""
     });
 
+    const postcodeCheck = async (postcode) => {
+        try {
+            const response = await fetch(`https://api.postcodes.io/postcodes/${postcode}/validate`);
+            const data = await response.json();
+            return data.result;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
+        const postcodeResult = await postcodeCheck(form.postcode);
+        if (!postcodeResult || postcodeResult.false) {
+            alert("Invalid postcode. Please enter a valid postcode.");
+            return;
+        }
         try {
-        const { data: res } = await axios.post(
-            "http://localhost:3000/api/customers", // replace with your customer endpoint
-            form
-        );
+            // Check if postcode is valid
 
-        // Merge customer info into bookingData
-        const updatedBookingData = {
-        ...bookingData,
-        customer_id: res.id,
-        full_name: form.full_name,
-        email: form.email,
-        phone: form.phone,
-        address: form.address
-    };
-    setBookingData(updatedBookingData);
-    console.log("Updated booking data:", updatedBookingData);
+            const { data: res } = await axios.post(
+                "http://localhost:3000/api/customers", // replace with your customer endpoint
+                form
+            );
 
-    console.log(res);
+            // Merge customer info into bookingData
+            const updatedBookingData = {
+                ...bookingData,
+                customer_id: res.id,
+                full_name: form.full_name,
+                email: form.email,
+                phone: form.phone,
+                address: form.postcode + " " + form.address
+            };
+        setBookingData(updatedBookingData);
+        console.log("Updated booking data:", updatedBookingData);
 
-    navigate("/details"); // move to booking step
+        console.log(res);
+
+        navigate("/details"); // move to booking step
 
         } catch (err) {
         console.error(err);
@@ -79,6 +96,17 @@ export default function Step0CustomerCreation() {
             id="phone"
             name="phone"
             value={form.phone}
+            onChange={handleChange}
+            required
+            />
+        </div>
+
+        <div className="formRow">
+            <label htmlFor="postcode">Postcode:</label>
+            <input
+            id="postcode"
+            name="postcode"
+            value={form.postcode}
             onChange={handleChange}
             required
             />
