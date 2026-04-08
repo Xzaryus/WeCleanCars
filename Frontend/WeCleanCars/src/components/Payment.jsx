@@ -39,7 +39,7 @@ function PaymentForm({ bookingIds, amount }) {
             if (error) {
                 setMessage(`Payment failed: ${error.message}`);
             } else if (paymentIntent && paymentIntent.status === "succeeded") {
-                setMessage("✅ Payment successful!");
+                setMessage("Payment successful!");
             }
         } catch (err) {
         console.error(err);
