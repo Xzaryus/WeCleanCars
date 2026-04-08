@@ -10,8 +10,6 @@ const router = Router();
 
 // POST /api/bookings/available
 router.post('/available', getAvailableBookingOptionsController);
-
-// POST /api/bookings
 router.post('/create', createBookingForCustomerController);
 
 
