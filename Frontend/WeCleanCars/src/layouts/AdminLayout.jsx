@@ -1,5 +1,10 @@
 import { Outlet } from "react-router-dom";
+import { useState } from "react";
 
 export default function AdminLayout() {
-    return <Outlet />;
+    const [user, setUser] = useState({});
+
+    return <Outlet
+        context={[user, setUser]} 
+        />;
 }
