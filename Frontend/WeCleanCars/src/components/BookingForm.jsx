@@ -8,7 +8,7 @@ export default function Step1BookingForm({ bookingData, setBookingData, setStep 
         { id: 1, name: "£35 Deep Clean" },
         { id: 2, name: "Full Steam Ahead" },
         { id: 3, name: "The Exterior Detail" },
-        { id: 4, name: "The Essntial Valet" },
+        { id: 4, name: "The Essential Valet" },
         { id: 5, name: "The Premium Valet" },
     ];
 
