@@ -2,6 +2,8 @@ import {
     login,
     createUser
 } from '../models/newAdminModel.js';
+import {getAllVehicleTypes} from '../models/VehicleModel.js';
+import { getAllServices } from '../models/serviceModel.js';
 
 async function logon(req, res) {
     const { username, password } = req.body;
@@ -15,4 +17,27 @@ async function register(req, res) {
     res.json({ message: 'User created', id });
 }
 
-export { logon, register };
+async function fetchAllServices(req, res) {
+    try {
+        const services = await getAllServices();
+        res.json(services);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch services' });
+    }
+}
+
+async function fetchAllVehicleTypes(req, res) {
+    try {
+        const vehicleTypes = await getAllVehicleTypes();
+        res.json(vehicleTypes);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch vehicle types' });
+    }
+}
+
+export { 
+    logon,
+    register,
+    fetchAllServices,
+    fetchAllVehicleTypes
+};
