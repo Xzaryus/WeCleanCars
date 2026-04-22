@@ -9,13 +9,15 @@ import {
     fetchCustomerByEmail,
     editCustomer,
     removeCustomer,
-    createAccount
+    createAccount,
+    fetchAllCustomers
 } from '../controllers/customerController.js';
 
 router.post('/customers', addCustomer);
 router.post('/customers/account', createAccount);
 router.get('/customers/email/:email', fetchCustomerByEmail);
 router.get('/customers/:id', fetchCustomeryById);
+router.get('/customers', fetchAllCustomers);
 router.put('/customers/:id', editCustomer);
 router.delete('/customers/:id', removeCustomer);
 

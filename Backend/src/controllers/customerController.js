@@ -4,7 +4,8 @@ import {
     getCustomerByEmail,
     updateCustomer,
     deleteCustomer,
-    createCustomerAccount
+    createCustomerAccount,
+    getAllCustomers
 } from '../models/customerModel.js';
 
 // Create a new customer
@@ -19,6 +20,16 @@ async function addCustomer(req, res) {
         res.status(201).json({ message: 'Customer added', id });
     } catch (error) {
         res.status(500).json({ error: 'Failed to add customer' });
+    }
+}
+
+// Get all customers
+async function fetchAllCustomers(req, res) {
+    try {
+        const customers = await getAllCustomers();
+        res.json(customers);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch customers' });
     }
 }
 
@@ -104,5 +115,6 @@ export {
     fetchCustomerByEmail,
     editCustomer,
     removeCustomer,
-    createAccount
+    createAccount,
+    fetchAllCustomers
 };

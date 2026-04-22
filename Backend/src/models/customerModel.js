@@ -18,6 +18,17 @@ async function createCustomer(customerData) {
     }
 }
 
+async function getAllCustomers() {
+    const query = 'SELECT * FROM customers';
+    try {
+        const [rows] = await pool.query(query);
+        return rows;
+    } catch (error) {
+        console.error('Error retrieving customers:', error);
+        throw error;
+    }
+}
+
 async function getCustomerById(id) {
     const query = 'SELECT * FROM customers WHERE id = ?';
     try {
@@ -109,5 +120,6 @@ export {
     getCustomerByEmail,
     updateCustomer,
     deleteCustomer,
-    createCustomerAccount
+    createCustomerAccount,
+    getAllCustomers
 };
