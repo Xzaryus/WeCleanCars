@@ -22,8 +22,20 @@ const StaffCards = ({ name, tier, onClick}) => (
     </button>
 )
 
+const BookingCards = ({ id, service, address, time, date, price }) => (
+    <div className="bookingCard">
+        <h3>Booking ID: {id}</h3>
+        <p>Service: {service}</p>
+        <p>Address: {address}</p>
+        <p>Time: {time}</p>
+        <p>Date: {date}</p>
+        <p>Price: {price}</p>
+    </div>
+)
+
 export {
     ManagerCards,
     CleanerCards,
-    StaffCards
+    StaffCards,
+    BookingCards
 }
