@@ -1,8 +1,11 @@
 import {
     createBookingForCustomer,
-    getAvailableBookingOptions
+    getAvailableBookingOptions,
 } from '../services/bookingService.js';
-
+import { 
+    getBookingsByDate,
+    getBookingsByDateRange
+} from '../models/bookingModel.js';
 
 async function getAvailableBookingOptionsController(req, res) {
     try {
@@ -43,7 +46,32 @@ async function createBookingForCustomerController(req, res) {
     }
 }
 
+async function getBookingsByDateController(req, res) {
+    try {
+        const date = req.params.date;
+        const result = await getBookingsByDate(date);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error fetching bookings by date:', error);
+        res.status(500).json({ message: error.message || 'Internal server error' });
+    }
+}
+
+async function getBookingsByDateRangeController(req, res) {
+    try {
+        const startDate = req.params.startDate;
+        const endDate = req.params.endDate;
+        const result = await getBookingsByDateRange(startDate, endDate);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error fetching bookings by date range:', error);
+        res.status(500).json({ message: error.message || 'Internal server error' });
+    }
+}
+
 export {
     getAvailableBookingOptionsController,
-    createBookingForCustomerController
+    createBookingForCustomerController,
+    getBookingsByDateController,
+    getBookingsByDateRangeController
 };

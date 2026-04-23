@@ -78,6 +78,17 @@ async function getBookingsByDate(date) {
     }
 }
 
+async function getBookingsByDateRange(startDate, endDate) {
+    const query = 'SELECT * FROM bookings WHERE date BETWEEN ? AND ?';
+    try {
+        const [rows] = await pool.query(query, [startDate, endDate]);
+        return rows;
+    } catch (error) {
+        console.error('Error retrieving bookings:', error);
+        throw error;
+    }
+}
+
 async function getBookingsByCleaner(id, status) {
     const query = status
         ? 'SELECT * FROM bookings WHERE assigned_cleaner_id = ? AND status = ?'
@@ -118,6 +129,7 @@ export {
     createBooking,
     getBookingsById,
     getBookingsByDate,
+    getBookingsByDateRange,
     getBookingsByCleaner,
     getBookingPrice,
     updateBookingStatus
